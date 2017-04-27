@@ -1,3 +1,5 @@
+# https://www.reddit.com/r/dailyprogrammer/comments/64y4cf/20170412_challenge_310_intermediate_simplifying/
+
 import math
 
 def findSquares(num):
