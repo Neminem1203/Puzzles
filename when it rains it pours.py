@@ -44,12 +44,33 @@ def answer(heights):
 
 
 # Testing the Program
-n = 10 # Number of Elements
-num = 10 # Number of Tests
-high = 10 # highest number value
+visual = True       #Visual representation
+n = 10              # Number of Elements
+num = 10            # Number of Tests
+high = 10           # highest number value
 test = [0 for i in range(n)]
 for i in range(num):
     for j in range(n):
         test[j] = random.randint(1,high)
     print(test)
-    print("Answer: ", answer(test),"\n")
+    print("Answer: ", answer(test))
+    maxnum = 0
+    if visual == True:
+        for i in range(max(test)):
+            maxnum = max(test)
+            printed = False
+            for j in range(n):
+                if(maxnum in test):
+                    if(test[j] == maxnum):
+                        print('X',end='')
+                        test[j] -= 1
+                        printed = True
+                    else:
+                        if printed == True:
+                            print('O',end='')
+                        else:
+                            print('.',end='')
+                else:
+                    print('.',end='')
+            print('')
+    print('')
