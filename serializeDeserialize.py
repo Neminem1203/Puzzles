@@ -73,9 +73,22 @@ def deserialize(strng):
     (-left.right.left-) is a leaf node
     create it as left of left.right
     
-    sidenote:
+    sidenote1:
     could add () as None to make it easier?
     (()-val-()) = leaf node
+    
+    IDEA 2
+    deserialize entire string
+    brackets[0] = full tree
+    if(brackets[1][0] == brackets[0][0]+1 (left node is brackets[1][0]:brackets[1][1])
+    deserialize(brackets[1][0]:brackets[1][1])
+    middle is value
+    check if the right node exists (does another set of brackets exist after leftNodes rightmost value (> brackets[1][1])
+    if yes: deserialize(rightNode)
+    
+    sidenote2:
+    this way we dont have to make use of sidenote1
+    maybe can still implement sidenote1?
     '''
     print(brackets)
 
