@@ -62,7 +62,21 @@ def deserialize(strng):
                 if(brackets[ind][1] == -1):
                     brackets[ind][1] = i
                     break
-
+    '''
+    IDEA 1
+    build tree from bottom up.
+    (-val-) = a leaf node
+    anything else you parse
+    for example ((-left.left-)-left-((-left.right.left-)-left.right-))
+    (-left.left-) is created as left's left node
+    parse right with same function
+    (-left.right.left-) is a leaf node
+    create it as left of left.right
+    
+    sidenote:
+    could add () as None to make it easier?
+    (()-val-()) = leaf node
+    '''
     print(brackets)
 
 
