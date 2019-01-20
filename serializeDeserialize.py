@@ -24,10 +24,10 @@ assert deserialize(serialize(node)).left.left.val == 'left.left'
              /
             left.left
             
-string representation: (((-left.left-)-left-)-root-(-right-))
+string representation: (((()left.left())left())root(()right()))
 
-with this, '(', ')' and '-' are illegal characters for value in tree
-            this can be changed in serialize (leftBracket, rightBracket, connector)
+with this, '(' and ')' are illegal characters for value in tree
+            this can be changed under the class Node (leftBracket, rightBracket)
 
 '''
 
@@ -37,22 +37,26 @@ class Node:
         self.left = left
         self.right = right
 
+leftBracket = "("
+rightBracket = ")"
 
 # tree - > string
 def serialize(node):
-    connector = "-"
-    leftBracket = "("
-    rightBracket = ")"
-
     returnstring = ""
     if(node.left):
         returnstring += serialize(node.left)
-    returnstring+=connector+node.val+connector
+    else:
+        returnstring += "()"
+    returnstring+=node.val
     if(node.right):
         returnstring += serialize(node.right)
+    else:
+        returnstring += "()"
     return leftBracket+returnstring+rightBracket
 
 def deserialize(strng):
+    if(strng == "()"):
+        return None
     brackets = []
     for i in range(len(strng)):
         if(strng[i] == "("):
@@ -62,56 +66,27 @@ def deserialize(strng):
                 if(brackets[ind][1] == -1):
                     brackets[ind][1] = i
                     break
-    '''
-    IDEA 1
-    build tree from bottom up.
-    (-val-) = a leaf node
-    anything else you parse
-    for example ((-left.left-)-left-((-left.right.left-)-left.right-))
-    (-left.left-) is created as left's left node
-    parse right with same function
-    (-left.right.left-) is a leaf node
-    create it as left of left.right
-    
-    sidenote1:
-    could add () as None to make it easier?
-    (()-val-()) = leaf node
-    
-    IDEA 2
-    deserialize entire string
-    brackets[0] = full tree
-    if(brackets[1][0] == brackets[0][0]+1 (left node is brackets[1][0]:brackets[1][1])
-    deserialize(brackets[1][0]:brackets[1][1])
-    middle is value
-    check if the right node exists (does another set of brackets exist after leftNodes rightmost value (> brackets[1][1])
-    if yes: deserialize(rightNode)
-    
-    sidenote2:
-    this way we dont have to make use of sidenote1
-    maybe can still implement sidenote1?
-    '''
-    print(brackets)
+    rB = brackets[1][1] # rB = right Brackets
+    for i in range(len(brackets)):
+        if rB < brackets[i][0]:
+            rB = i
+            break
+    mainNode = Node(strng[brackets[1][1]+1:brackets[rB][0]],
+                deserialize(strng[brackets[1][0]:brackets[1][1]+1]),
+                deserialize(strng[brackets[rB][0]:brackets[rB][1]+1]))
+    return mainNode
 
 
 
 
 
 
+# Main Function
 
 node = Node('root', Node('left', Node('left.left')), Node('right'))
-testnode = Node('root', Node('left', Node('left.left'), Node('left.right',Node('left.right.left'))),Node('right', Node('right.left'), Node('right.right')))
+# testnode = Node('root', Node('left', Node('left.left'), Node('left.right',Node('left.right.left'))),Node('right', Node('right.left'), Node('right.right')))
 strrep = serialize(node)
-print(strrep)
-strrep=serialize(testnode)
-print(strrep)
-for i in range(0, len(strrep), 10):
-    for j in range(5):
-        print("X",end="")
-    for j in range(5):
-        print("O", end="")
-print("")
-
-
 tree = deserialize(strrep)
 
-# assert deserialize(serialize(node)).left.left.val == 'left.left'
+
+assert deserialize(serialize(node)).left.left.val == 'left.left'
