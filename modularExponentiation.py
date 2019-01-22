@@ -1,4 +1,5 @@
 '''
+https://www.geeksforgeeks.org/modular-exponentiation-power-in-modular-arithmetic/
 Given three numbers x, y and p, compute (x**y) % p.
 '''
 
