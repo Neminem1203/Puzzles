@@ -20,7 +20,7 @@ def shift(magicNumbers):
 
 def swapInd(matrix, arrpos):
     ind = 1
-    while(ind != len(arrpos)-2):
+    while(ind != len(arrpos)):
         temp = matrix[arrpos[0][0]][arrpos[0][1]]
         matrix[arrpos[0][0]][arrpos[0][1]] = matrix[arrpos[ind][0]][arrpos[ind][1]]
         matrix[arrpos[ind][0]][arrpos[ind][1]] = temp
@@ -33,7 +33,7 @@ def inplaceRotation(mat):
         return mat
     n = len(mat)-1
     mN = [[0, 0], [n, 0], [n, n], [0, n]] #magic numbers
-    for i in range(math.ceil((n+1)/2)):
+    for i in range(math.floor((n+1)/2)):
         # for i in magicNumbers:
         #     print(i,end=", ")
         # print("")
@@ -51,6 +51,9 @@ def inplaceRotation(mat):
         mN = shift(mN)
     return mat
 
-
-print(inplaceRotation(testMatrix1))
-print(inplaceRotation(testMatrix2))
+print(testMatrix1)
+print(inplaceRotation(testMatrix1),"\n")
+print(testMatrix2)
+print(inplaceRotation(testMatrix2),"\n")
+print(testMatrix3)
+print(inplaceRotation(testMatrix3),"\n")
