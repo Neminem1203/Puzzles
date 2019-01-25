@@ -8,26 +8,34 @@ You can assume that the messages are decodable. For example, '001' is not allowe
 
 def possibilities(str):
     lst = [int(i) for i in str]
-    num = 1
-    prev = 0
+    print("Original: ", lst)
+    fib = 1
+    prev = 1
     combos = []
     for i in range(1,len(lst)):
-        if(lst[i] != 0 and lst[i-1]*10 + lst[i] < 27):
-            # print("Possibility: ", lst[i-1]*10 + lst[i])
-            if prev > 0:
-                num += prev
-            else:
-                num *= 2
-            prev += 1
+        if(lst[i] == 0):
+            fib = fib-prev
+            if(prev > 1):
+                combos.append(prev)
+            fib = 1
+            prev = 1
             continue
-        combos.append(num)
-        num = 1
-        prev = 0
-    combos.append(num)
+
+        if(lst[i-1]*10 + lst[i] < 27 and lst[i-1]*10 + lst[i] > 10):
+            fib += prev
+            prev = fib-prev
+            continue
+
+        if(fib > 1):
+            combos.append(fib)
+        fib = 1
+        prev = 1
+    if(fib > 1):
+        combos.append(fib)
     ret = 1
     for i in combos:
         ret *= i
-    print(combos, ret)
+    print("Result: ", ret)
     return ret
 
 possibilities('111')
@@ -35,11 +43,6 @@ possibilities('111')
 1 1 1
 11 1
 1 11
-'''
-possibilities('12521')
-''' 1-2-5 2-1
-(125) 1 2 5, 1 25, 12 5 
-(21) = 2 1, 21
 '''
 possibilities('2112')
 ''' 2-1-1-2
@@ -49,16 +52,10 @@ possibilities('2112')
 21 1 2
 21 12
 '''
-possibilities('22222')
-''' 2-2-2-2-2
-2 2 2 2 2
-2 2 2 22
-2 22 2 2
-2 22 22
-2 2 22 2
-22 2 2 2
-22 2 22
-22 22 2
+possibilities('12521')
+''' 1-2-5 2-1
+(125) 1 2 5, 1 25, 12 5 
+(21) = 2 1, 21
 '''
 possibilities('22632112')
 '''2-2-6 3 2-1-1-2
@@ -72,4 +69,7 @@ possibilities('22632112')
 21 1 2
 21 12
 2 11 2
+'''
+possibilities('1101121023')
+'''1 10 1-1 20 2-3
 '''
