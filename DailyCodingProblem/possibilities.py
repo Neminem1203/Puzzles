@@ -14,7 +14,6 @@ def possibilities(str):
     combos = []
     for i in range(1,len(lst)):
         if(lst[i] == 0):
-            fib = fib-prev
             if(prev > 1):
                 combos.append(prev)
             fib = 1
@@ -71,5 +70,5 @@ possibilities('22632112')
 2 11 2
 '''
 possibilities('1101121023')
-'''1 10 1-1 20 2-3
+'''1 10 1-1-2 10 2-3
 '''
