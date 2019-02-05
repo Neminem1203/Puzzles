@@ -11,8 +11,7 @@ def distinctCharacters(s,k):
         # for test in lst:
         #     if(len(lst[0] < k) and char not in lst[0]):
         #         lst.append([lst[ind]+char, lst[ind]])
-
-        pass
+        return
 
 
 
