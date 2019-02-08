@@ -9,6 +9,13 @@ testMatrix3 = [[1,2,3,4,5,6],[7,8,9,10,11,12],[13,14,15,16,17,18],
                [19,20,21,22,23,24],[25,26,27,28,29,30],[31,32,33,34,35,36]]
 
 
+orderMat = [['0', '1', '2', '3', '8', '4', '0'],
+            ['4', '5', '6', '7', '9', '5', '1'],
+            ['8', '9', 'A', 'B', 'A', '6', '2'],
+            ['3', '7', 'B', 'X', 'B', '7', '3'],
+            ['2', '6', 'A', 'B', 'A', '9', '8'],
+            ['1', '5', '9', '7', '6', '5', '4'],
+            ['0', '4', '8', '3', '2', '1', '0']]
 
 
 def shift(magicNumbers):
@@ -34,7 +41,7 @@ def inplaceRotation(mat):
     n = len(mat)-1
     mN = [[0, 0], [n, 0], [n, n], [0, n]] #magic numbers
     for i in range(math.floor((n+1)/2)):
-        # for i in magicNumbers:
+        # for i in mN:
         #     print(i,end=", ")
         # print("")
         for j in range(math.ceil((n+1)/2)):
@@ -51,9 +58,11 @@ def inplaceRotation(mat):
         mN = shift(mN)
     return mat
 
-print(testMatrix1)
-print(inplaceRotation(testMatrix1),"\n")
-print(testMatrix2)
-print(inplaceRotation(testMatrix2),"\n")
-print(testMatrix3)
-print(inplaceRotation(testMatrix3),"\n")
+print(orderMat)
+print(inplaceRotation(orderMat))
+# print(testMatrix1)
+# print(inplaceRotation(testMatrix1),"\n")
+# print(testMatrix2)
+# print(inplaceRotation(testMatrix2),"\n")
+# print(testMatrix3)
+# print(inplaceRotation(testMatrix3),"\n")
