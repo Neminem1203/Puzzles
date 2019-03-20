@@ -13,3 +13,43 @@ For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "
 "fox  jumps  over", # 2 extra spaces distributed evenly
 "the   lazy   dog"] # 4 extra spaces distributed evenly
 '''
+
+words = ["the", "quick", "brown","shoopbideeboop", "fox", "jumps", "over", "the", "lazy", "dog"]
+k = 16
+
+def intLenKLine(words, k):
+    def checkWord(line):
+        if (numWords > 1):
+            ind = 0
+            while (len(line) < k):
+                while (line[ind % len(line)] != " "):
+                    ind += 1
+                    if (ind >= len(line)):
+                        ind = 0
+                line = line[:ind] + " " + line[ind:]
+                while (line[ind] == " "):
+                    ind += 1
+        else:
+            while (len(line) < k):
+                line += " "
+        return line
+    # MAIN FUNCTION
+    retList = []
+    line = ""
+    numWords = 0
+    for word in words:
+        if(len(word)+len(line)+1 > k):
+            line = checkWord(line)
+            retList.append(line)
+            line = word
+            numWords = 1
+        else:
+            if(line != ""):
+                line += " "
+            line += word
+            numWords += 1
+    line = checkWord(line)
+    retList.append(line)
+    return retList
+
+print(intLenKLine(words, k))
