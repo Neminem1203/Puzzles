@@ -12,12 +12,12 @@ Given the regular expression ".*at" and the string "chat", your function should 
 '''
 
 def starCheck(expressionList, string):
-    check = False
+    star = True
     while(expressionList):
-        print(string)
-        check = True
         if(expressionList[0] == "*"):
+            star = True
             expressionList.pop(0)
+
             if(not expressionList):
                 return True
         elif(expressionList[0] == "."):
@@ -27,11 +27,27 @@ def starCheck(expressionList, string):
             else:
                 return False
         else:
-            ind = string.find(expressionList[0])
-            if(ind >= 0):
-                string = string[ind+len(expressionList[0]):]
+            if(not star):
+                if string[:len(expressionList[0])] == expressionList[0]:
+                    string = string[len(expressionList[0]):]
+                    expressionList.pop(0)
+                    star = False
+            elif(star):
+                while(not starCheck(expressionList[1:], string[string.find(expressionList[0])+len(expressionList[0]):])):
+                    if(string.find(expressionList[0]) > 0):
+                        string = string[string.find(expressionList[0])+1:]
+                    else:
+                        return False
+                if(string.find(expressionList[0]) == -1):
+                    return False
+                string = string[string.find(expressionList[0])+len(expressionList[0]):]
                 expressionList.pop(0)
-    if(string and check):
+                if(not expressionList):
+                    if(string):
+                        return False
+                    else:
+                        return True
+    if(string):
         return False
     else:
         return True
@@ -80,7 +96,15 @@ string2 = "ray"
 string3 = "raymond"
 
 
-print(customRegex(regex1, string1))
-print(customRegex(regex1, string4))
-print(customRegex(regex2, string2))
-print(customRegex(regex2, string3))
+# print(regex1, string1, customRegex(regex1, string1))
+# print(regex1, string4, customRegex(regex1, string4))
+# print(regex2, string2, customRegex(regex2, string2))
+# print(regex2, string3, customRegex(regex2, string3))
+
+hardregex1 = ".*fly."
+hardstring1 = "azxcsflyadflys"
+hardregex2 = ".*fly*.cookie."
+hardstring2 = "sdflyacsokcookiesdloflycookiea"
+print(hardregex1,hardstring1 , customRegex(hardregex1, hardstring1))
+print(hardregex2, hardstring2, customRegex(hardregex2, hardstring2))
+print(hardregex2, hardstring2[:-1], customRegex(hardregex2, hardstring2[:-1]))
