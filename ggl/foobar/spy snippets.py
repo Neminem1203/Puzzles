@@ -91,8 +91,8 @@ searchTerms = ["google", "program"]
 document = "a b c a d b c"
 searchTerms = ["a", "c", "d"]
 
-document = "many a people can hit a many targets and sometimes many are people"
-searchTerms = ["many", "people"]
+# document = "many a people can hit a many targets and sometimes many are people"
+# searchTerms = ["many", "people"]
 
 # document = "On September 24, 2008, just before the tobacco-free pharmacy ordinance was to take effect, Philip Morris USA, Inc. filed suit against the City and County of San Francisco in United States District Court.[6] Attorneys for Philip Morris argued unsuccessfully that the ordinance “forced the tobacco company to pull its advertising out of drugstores, interfering with its constitutional right to communicate with its customers”.[7] In addition to the lawsuit from Philip Morris, on September 8, 2008, Walgreens had more success when it sued the City and County of San Francisco in Superior Court of the State of California, claiming “unconstitutional discrimination” because the Walgreens location would not be allowed to sell cigarettes under the new ordinance whereas grocery and big box stores with pharmacies would be allowed to continue to sell.[7] After a number of legal appeals, Walgreens won the upper hand, with San Francisco ultimately deciding not to appeal."
 # searchTerms = ["just", "tobacco", "City", "Philip"]
