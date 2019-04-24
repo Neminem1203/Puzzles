@@ -9,6 +9,20 @@ Given the input [3, 0, 1, 3, 0, 5], we can hold 3 units in the first index, 2 in
 '''
 
 def rainWall(walls):
+    def calculateRain(highest, ind1, ind2, step=1):
+        secondHighest = 0
+        secondHighestInd = 0
+        sumOfWalls = 0
+        sumOfRain = 0
+        for ind in range(ind1, ind2, step):
+            sumOfWalls += walls[ind]
+            if(walls[ind] > secondHighest):
+                sumOfRain += (secondHighest*(abs(ind-secondHighestInd)))
+                secondHighest = walls[ind]
+                secondHighestInd = ind
+        sumOfRain += (secondHighest * (abs(ind2 - secondHighestInd)))
+        # return (secondHighest*(abs(ind2-ind1))-sumOfWalls)
+        return sumOfRain - sumOfWalls
     highest = walls[0]
     ind = 0
     for i in range(len(walls)):
@@ -16,13 +30,33 @@ def rainWall(walls):
             highest = walls[i]
             ind = i
 
-    for i in range(0, ind+1):
-        print(i,end=", ")
-    for i in range(len(walls)-1, ind-1, -1):
-        print(i,end=", ")
-    print()
+    rain = 0
+    rain += calculateRain(highest,0, ind)
+    rain += calculateRain(highest,len(walls)-1, ind, -1)
+    print(rain)
 
 sampleWall = [3, 0, 1, 3, 0, 5]
-bigWall = [2,5,3,6,9,5,3,9,1,5,3,4]
+bigWall = [2,5,3,6,9,5,3,9,1,5,6,4]
 rainWall(sampleWall)
 rainWall(bigWall)
+'''
+.....X
+.....X
+XOOXOX
+XOOXOX
+XOXXOX
+301305
+SUM = 8
+
+....XOOX....
+....XOOX....
+....XOOX....
+...XXOOXOOX.
+.XOXXXOXOXX.
+.XOXXXOXOXXX
+.XXXXXXXXXXX
+XXXXXXXXXXXX
+XXXXXXXXXXXX
+253695391564
+SUM = 18
+'''
