@@ -7,6 +7,7 @@ For example, given the input [2, 1, 2], we can hold 1 unit of water in the middl
 
 Given the input [3, 0, 1, 3, 0, 5], we can hold 3 units in the first index, 2 in the second, and 3 in the fourth index (we cannot hold 5 since it would run off to the left), so we can trap 8 units of water.
 '''
+import random
 
 def rainWall(walls):
     def calculateRain(highest, ind1, ind2, step=1):
@@ -33,12 +34,19 @@ def rainWall(walls):
     rain = 0
     rain += calculateRain(highest,0, ind)
     rain += calculateRain(highest,len(walls)-1, ind, -1)
-    print(rain)
+    # print(rain)
+    return(rain)
 
-sampleWall = [3, 0, 1, 3, 0, 5]
-bigWall = [2,5,3,6,9,5,3,9,1,5,6,4]
-rainWall(sampleWall)
-rainWall(bigWall)
+# sampleWall = [3, 0, 1, 3, 0, 5]
+# print(sampleWall,"\n",rainWall(sampleWall))
+
+# bigWall = [2,5,3,6,9,5,3,9,1,5,6,4]
+# print(bigWall,"\n",rainWall(bigWall))
+
+for i in range(0, 3):
+    randomWall = [random.randint(0,15) for x in range(random.randint(5,15))]
+    print(randomWall,"\n",rainWall(randomWall))
+
 '''
 .....X
 .....X
