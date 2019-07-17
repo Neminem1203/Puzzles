@@ -41,7 +41,8 @@ def palindromeInsert(word):
     print(palindrome)
 
 breakTest = "ramgrma" # This should be ramrgrmar but my program gives me grammarg which is completely wrong
-secondTest = "ragamaror"
+# Idea: use a pivot point for the words if there's no pairs in the middle
+secondTest = "ragamaror" #roramagamaror
 palindromeInsert(breakTest)
 palindromeInsert(secondTest)
 palindromeInsert("google")
