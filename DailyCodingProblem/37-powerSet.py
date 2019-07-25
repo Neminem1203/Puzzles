@@ -1,7 +1,7 @@
 
 
 def powerSet(originalSet):
-    newSet = []
+    newSet = [[]]
     def combo(stack, frm, to, len):
         if(len != 1):
             for num in range(frm, to):
