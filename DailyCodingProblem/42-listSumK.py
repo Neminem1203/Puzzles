@@ -49,17 +49,40 @@ class linkedList:
 
 
 def listSumK(list, k):
+    def testList(remainingList, list, sumOfList, k):
+        if(remainingList == []):
+            return None
+        elif(sumOfList == k):
+            return list
+
+        if(sumOfList + remainingList[0] > k):
+            return None
+        sumOfList += remainingList[0]
+        list += [remainingList[0]]
+        if(sumOfList == k):
+            return list
+        remainingList = remainingList[1:]
+        for index in range(len(remainingList)):
+            retList = testList(remainingList[index:], list, sumOfList, k)
+            if(retList != None):
+                return retList
+        return None
+
 
     sortedList = linkedList()
     for i in list:
         if(i < k):
             sortedList.insert(i)
-    sortedList.print()
     sortedArray = sortedList.returnArray()
-    print(sortedArray)
+    for index in range(len(sortedArray)):
+        retList = testList(sortedArray[index:], [], 0, k)
+        if(retList != None):
+            return retList
 
 
 
 
 list = [12, 1, 61, 5, 9, 2]
-listSumK(list, 24)
+print(listSumK(list, 24))
+list = [12, 1, 25, 5, 9, 2]
+print(listSumK(list, 32))
