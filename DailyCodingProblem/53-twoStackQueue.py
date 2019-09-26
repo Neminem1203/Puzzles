@@ -67,7 +67,7 @@ class queue:
             self.stacks[1].push(value)
             value = self.stacks[0].pop()
         value = self.stacks[1].pop()
-        print("Queue: ",end="")
+        print("Queue:   ",end="")
         while(value != None):
             print(value, end=" ")
             self.stacks[0].push(value)
@@ -84,8 +84,8 @@ testQueue.enqueue(7)
 testQueue.print()
 popped = testQueue.dequeue()
 while(popped):
-    print("Dequeue: ", popped)
+    print("Dequeue:", popped)
     testQueue.print()
     popped = testQueue.dequeue()
 
-print("Dequeue: ", popped)
+print("Dequeue:", popped)
