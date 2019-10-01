@@ -3,42 +3,34 @@ Sudoku is a puzzle where you're given a partially-filled 9 by 9 grid with digits
  the constraint that every row, column, and box (3 by 3 subgrid) must contain all of the digits from 1 to 9.
 
 Implement an efficient sudoku solver.
+
+emptySudoku =[[[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
+              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
+              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
+              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
+              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
+              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
+              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
+              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
+              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]]]
+
 '''
-'''
-emptySudoku = [[[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
-              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
-              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
-              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
-              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
-              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
-              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
-              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
-              [[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]]]'''
 
-testSudoku1 =[[[6], [ ], [ ], [ ], [ ], [ ], [2], [4], [7]],
-              [[ ], [ ], [ ], [ ], [8], [ ], [ ], [ ], [ ]],
-              [[ ], [3], [ ], [ ], [6], [ ], [9], [1], [8]],
-              [[3], [6], [7], [ ], [ ], [1], [ ], [ ], [ ]],
-              [[8], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [2]],
-              [[ ], [ ], [ ], [3], [ ], [ ], [1], [6], [4]],
-              [[9], [2], [6], [ ], [5], [ ], [ ], [8], [ ]],
-              [[ ], [ ], [ ], [ ], [4], [ ], [ ], [ ], [ ]],
-              [[7], [5], [4], [ ], [ ], [ ], [ ], [ ], [6]]]
+testSudoku =[[[ ], [ ], [ ], [ ], [ ], [8], [ ], [ ], [2]],
+              [[ ], [ ], [5], [6], [ ], [ ], [ ], [3], [ ]],
+              [[ ], [ ], [9], [1], [ ], [ ], [ ], [4], [ ]],
+              [[ ], [1], [3], [ ], [ ], [6], [ ], [ ], [9]],
+              [[9], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [6]],
+              [[8], [ ], [ ], [5], [ ], [ ], [3], [7], [ ]],
+              [[ ], [6], [ ], [ ], [ ], [3], [7], [ ], [ ]],
+              [[ ], [4], [ ], [ ], [ ], [9], [1], [ ], [ ]],
+              [[3], [ ], [ ], [2], [ ], [ ], [ ], [ ], [ ]]]
 
 
-testSudoku2 =[[[ ], [ ], [ ], [ ], [ ], [1], [ ], [7], [ ]],
-              [[ ], [ ], [ ], [6], [8], [4], [ ], [ ], [5]],
-              [[ ], [5], [ ], [ ], [ ], [ ], [ ], [4], [ ]],
-              [[1], [ ], [7], [8], [ ], [ ], [4], [ ], [ ]],
-              [[8], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [3]],
-              [[ ], [ ], [5], [ ], [ ], [7], [6], [ ], [9]],
-              [[ ], [1], [ ], [ ], [ ], [ ], [ ], [2], [ ]],
-              [[6], [ ], [ ], [3], [4], [5], [ ], [ ], [ ]],
-              [[ ], [3], [ ], [2], [ ], [ ], [ ], [ ], [ ]]]
 
 from copy import copy, deepcopy
 
-debug = True
+debug = False
 
 def printSudoku(sudoku):
     x = 0
@@ -112,100 +104,91 @@ def sudokuSolver(sudokuPuzzle):
 
                     # after we find out the available numbers for the cell [x,y]
                     if len(availableNums) > 1:
-                        horizontalEmpty = [0 for i in range(3)]
-                        verticalEmpty = [0 for i in range(3)]
+                        emptyBox = [[0 for i in range(3)] for j in range(3)]
                         for boxX in range(boxStart[0], boxStart[0]+3):
                             for boxY in range(boxStart[1], boxStart[1]+3):
                                 if(len(sudokuPuzzle[boxX][boxY]) != 1):
                                     if(boxX != x or boxY != y):
-                                        horizontalEmpty[boxX-boxStart[0]] += 1
-                                        verticalEmpty[boxY-boxStart[1]] += 1
-                        print(x, " ", y, " ",boxStart,"\t", horizontalEmpty, "\t", verticalEmpty)
-                        # top horizontal line
+                                        emptyBox[boxX-boxStart[0]][boxY-boxStart[1]] = 1
+                        # left line
                         if  (x%3 ==0):
                             x1 = x+1
                             x2 = x+2
-                        # middle horizontal line
+                        # middle vertical line
                         elif(x%3==1):
                             x1 = x-1
                             x2 = x+1
-                        # bottom horizontal line
+                        # right line
                         else:
                             x1 = x-2
                             x2 = x-1
-                        # left vertical line
+                        # bottom line
                         if  (y%3==0):
                             y1 = y+1
                             y2 = y+2
-                        # middle vertical line
+                        # middle horizontal line
                         elif(y%3==1):
                             y1 = y-1
                             y2 = y+1
-                        # right vertical line
+                        # top line
                         else:
                             y1 = y-2
                             y2 = y-1
+                        if(debug):
+                            print("X: ",x, " Y:", y,"\t", emptyBox)
+                            print("X1:", x1, " X2:", x2, " Y1:", y1, " Y2:", y2)
                         # checking the numbers to see if it's possible in other grids of the box
                         for num in availableNums:
-                            if debug:
-                                print("X1:",x1," X2:",x2," Y1:",y1," Y2:",y2)
                             occurences = 0
-                            horizontalCopy = copy(horizontalEmpty)
-                            verticalCopy = copy(verticalEmpty)
+                            emptyBoxCopy = deepcopy(emptyBox)
+                            if debug:
+                                print(emptyBoxCopy)
                             for i in range(9):
                                 if(sudokuPuzzle[x1][i] == [num]):
                                     occurences += 1
-                                    horizontalCopy[x1%3] = 0
+                                    for j in range(3):
+                                        emptyBoxCopy[x1%3][j] = 0
                                 if(sudokuPuzzle[x2][i] == [num]):
                                     occurences += 1
-                                    horizontalCopy[x2%3] = 0
+                                    for j in range(3):
+                                        emptyBoxCopy[x2%3][j] = 0
                                 if(sudokuPuzzle[i][y1] == [num]):
                                     occurences += 1
-                                    verticalCopy[y1%3] = 0
+                                    for j in range(3):
+                                        emptyBoxCopy[j][y1%3] = 0
                                 if(sudokuPuzzle[i][y2] == [num]):
                                     occurences += 1
-                                    verticalCopy[y2%3] = 0
+                                    for j in range(3):
+                                        emptyBoxCopy[j][y2%3] = 0
                             # if we find 4 occurences, then this exact cell is where the number should be
                             if occurences == 4:
                                 sudokuPuzzle[x][y] = [num]
                                 amountOfEmpty -= 1
                                 break
                             if debug:
-                                print(occurences,"\t",num,"\t\t\t",horizontalCopy,"\t", verticalCopy)
+                                print("Number:",num,"\nOccurences:",occurences,"\n",emptyBoxCopy,end="\n\n")
 
                             # this is checking if this number can be placed in the other cells in this block
                             # print(horizontalCopy, verticalCopy)
                             useThis = False
                             for i in range(3):
-                                if horizontalCopy[i] == 0:
-                                    useThis = True
-                                else:
+                                if 1 in emptyBoxCopy[i]:
                                     useThis = False
                                     break
+                                else:
+                                    useThis = True
                             if useThis:
                                 sudokuPuzzle[x][y] = [num]
                                 amountOfEmpty -= 1
                                 break
-                            useThis = False
-                            for i in range(3):
-                                if verticalCopy[i] == 0:
-                                    useThis = True
-                                else:
-                                    useThis = False
-                                    break
-                            if useThis:
-                                sudokuPuzzle[x][y] = [num]
-                                amountOfEmpty -= 1
-                                break
-
                         # print(availableNums)
                     # this only occurs when there's only one possible number for this cell [x,y]
                     else:
                         sudokuPuzzle[x][y] = availableNums
                         amountOfEmpty -= 1
         if debug:
-            print("Amount of Empties: ",amountOfEmpty)
-            print("Iteration: ", iterations)
+            print("Amount of Empties:",amountOfEmpty)
+            print("Iteration:", iterations)
             printSudoku(sudokuPuzzle)
         # this means the puzzle is complete
         if(amountOfEmpty == 0):
@@ -215,19 +198,45 @@ def sudokuSolver(sudokuPuzzle):
             # trying out the cells with 2 options
             if debug:
                 print("Multiple Paths here")
+            for x in range(9):
+                for y in range(9):
+                    amountOfEmpty += 1  # [x, y] is empty so we increment the counter
+                    availableNums = [i + 1 for i in range(9)]  # possible numbers in this cell
+                    # this is the top left coordinate of the box [x, y] are in
+                    boxStart = [int(x / 3) * 3, int(y / 3) * 3]
+                    for i in range(9):
+                        # getting rid of possible nums from vertical
+                        if (len(sudokuPuzzle[i][y]) == 1):
+                            for avail in range(len(availableNums)):
+                                if (availableNums[avail] == sudokuPuzzle[i][y][0]):
+                                    availableNums = availableNums[:avail] + availableNums[avail + 1:]
+                                    break
+                        # getting rid of possible nums from horizontal
+                        if (len(sudokuPuzzle[x][i]) == 1):
+                            for avail in range(len(availableNums)):
+                                if (availableNums[avail] == sudokuPuzzle[x][i][0]):
+                                    availableNums = availableNums[:avail] + availableNums[avail + 1:]
+                                    break
+                    # getting rid of possible nums from box
+                    for boxX in range(boxStart[0], boxStart[0] + 3):
+                        for boxY in range(boxStart[1], boxStart[1] + 3):
+                            if (len(sudokuPuzzle[boxX][boxY]) == 1):
+                                for avail in range(len(availableNums)):
+                                    if (availableNums[avail] == sudokuPuzzle[boxX][boxY][0]):
+                                        availableNums = availableNums[:avail] + availableNums[avail + 1:]
+                                        break
+                    for num in availableNums:
+                        sudokuPuzzleCopy = deepcopy(sudokuPuzzle)
+                        sudokuPuzzleCopy[x][y] = [num]
+                        sudokuPuzzleCopy = sudokuSolver(sudokuPuzzleCopy)
+                        if(sudokuPuzzleCopy != []):
+                            return sudokuPuzzleCopy
             break
     return sudokuPuzzle
 
 
 print("Original: ")
-printSudoku(testSudoku1)
-solution = sudokuSolver(testSudoku1)
+printSudoku(testSudoku)
+solution = sudokuSolver(testSudoku)
 print("Solution: ")
 printSudoku(solution)
-
-# for x in range(3):
-#     for y in range(3):
-#         boxStart = [x * 3, y * 3]
-#         for boxX in range(boxStart[0], boxStart[0] + 3):
-#             for boxY in range(boxStart[1], boxStart[1] + 3):
-#                 print([boxX, boxY], testSudoku2[boxX][boxY])
