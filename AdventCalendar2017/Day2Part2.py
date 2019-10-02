@@ -1,17 +1,14 @@
-
 def checksum(line):
     line = line.strip()
     array = line.split('\t')
-    min = int(array[0])
-    max = int(array[0])
     n = len(array)
-    for i in range(1, n):
+    for i in range(n):
         num = int(array[i])
-        if(num > max):
-            max = num
-        if(num < min):
-            min = num
-    return max - min
+        for j in range(0, n):
+            num2 = int(array[j])
+            if(i != j and num % num2 == 0):
+                return int(num / num2)
+
 
 f = open("input.txt", "r")
 contents = f.readlines()
