@@ -16,26 +16,6 @@ emptySudoku = [[[ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [ ]],
 
 '''
 
-testSudoku =[[[ ], [ ], [ ], [ ], [ ], [8], [ ], [ ], [2]],
-              [[ ], [ ], [5], [6], [ ], [ ], [ ], [3], [ ]],
-              [[ ], [ ], [9], [1], [ ], [ ], [ ], [4], [ ]],
-              [[ ], [1], [3], [ ], [ ], [6], [ ], [ ], [9]],
-              [[9], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [6]],
-              [[8], [ ], [ ], [5], [ ], [ ], [3], [7], [ ]],
-              [[ ], [6], [ ], [ ], [ ], [3], [7], [ ], [ ]],
-              [[ ], [4], [ ], [ ], [ ], [9], [1], [ ], [ ]],
-              [[3], [ ], [ ], [2], [ ], [ ], [ ], [ ], [ ]]]
-
-testSudoku = [[[ ], [ ], [ ], [ ], [5], [ ], [9], [ ], [ ]],
-              [[ ], [5], [ ], [ ], [ ], [7], [ ], [3], [ ]],
-              [[1], [4], [ ], [ ], [ ], [ ], [7], [ ], [ ]],
-              [[ ], [ ], [ ], [ ], [ ], [6], [3], [ ], [2]],
-              [[9], [ ], [ ], [ ], [ ], [ ], [ ], [ ], [6]],
-              [[8], [ ], [3], [9], [ ], [ ], [ ], [ ], [ ]],
-              [[ ], [ ], [6], [ ], [ ], [ ], [ ], [1], [7]],
-              [[ ], [1], [ ], [4], [ ], [ ], [ ], [2], [ ]],
-              [[ ], [ ], [2], [ ], [1], [ ], [ ], [ ], [ ]]]
-
 
 from copy import copy, deepcopy
 
@@ -242,6 +222,20 @@ def sudokuSolver(sudokuPuzzle):
                             return sudokuPuzzleCopy
             break
     return sudokuPuzzle
+
+# https://www.sudokuweb.org/
+# use the above site to copy and paste sudoku puzzles into sudoku.txt
+f = open("sudoku.txt", "r")
+contents = f.readlines()
+
+testSudoku =[[[] for x in range(9)] for y in range(9)]
+lineNum = -1
+for line in contents:
+    lineNum += 1
+    for col in range(0, 27, 3):
+        num = line[col].strip()
+        if num:
+            testSudoku[lineNum][int(col/3)] = [int(num)]
 
 
 print("Original: ")
