@@ -23,9 +23,9 @@ def pow(base, exp):
         iterations += 1
     return returnVal
 
-print(pow(2,10))
+print("2^10 = ", pow(2,10))
 print("Operations: ", operations)
-print(pow(2,16))
+print("2^16 = ", pow(2,16))
 print("Operations: ", operations)
-print(pow(5, 32))
+print("5^32 = ",pow(5, 32))
 print("Operations: ", operations)
