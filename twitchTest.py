@@ -25,6 +25,7 @@ while True:
 
 disconnect = False
 antispam = 0
+entered = []
 while not disconnect:
     for line in str(s.recv(1024)).split('\\r\\n'):
         print(line)
@@ -46,6 +47,14 @@ while not disconnect:
         username = usernamesplit[0]
 
         print(username + ": " + message)
+        # Entry Bot
         if(message.lower().find("enter:") != -1):
             send = message.lower().split("enter:")[1].strip()
+            entered += [send]
             send_message(username+" has entered "+send)
+        if(message.lower() == "!entered"):
+            if(len(entered) != 0):
+                send_message("Entries: "+", ".join(entered))
+            else:
+                send_message("No Entries Yet!")
+        
