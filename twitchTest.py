@@ -1,5 +1,5 @@
 import socket
-f = open("twitchcredentials.txt", "r")
+f = open("twitchcredentials.txt", "r") # put your username in the first line and oauth in the second line
 HOST = "irc.twitch.tv"
 PORT = 6667
 NICK = f.readline().strip()
@@ -12,7 +12,6 @@ s.connect((HOST, PORT))
 s.send(bytes("PASS " + PASS + "\r\n", "UTF-8"))
 s.send(bytes("NICK " + NICK + "\r\n", "UTF-8"))
 s.send(bytes("JOIN #" + NICK + " \r\n", "UTF-8"))
-count = 0
 
 def send_message(message):
     # data = bytes(":{0}!{0}@{0}.tmi.twitch.tv PRIVMSG #{1} :{2}\r\n".format(NICK, CHANNEL, message), "UTF-8")
@@ -31,11 +30,11 @@ while not disconnect:
         print(line)
         parts = line.split(':')
         print(parts)
-        if(line == "b''"):
+        if(line == "b''"): # not sure why but sometimes my terminal gets spammed
             antispam += 1
             if antispam > 10:
                 disconnect = True
-        if("PING" in parts[0]):
+        if("PING" in parts[0]): # Response to Ping from Twitch
             print("Sending Pong Message")
             s.send(bytes("PONG :tmi.twitch.tv", "UTF-8"))
         if len(parts) < 3:
@@ -46,15 +45,7 @@ while not disconnect:
         usernamesplit = parts[1].split("!")
         username = usernamesplit[0]
 
-        # print(username + ": " + message)
-        if(message.isdecimal() and count+1 == int(message)):
-            count += 1
-        else:
-            count = 0
-        if(count == 10):
-            send_message("Congratulations on counting to 10")
-            count = 0
-        print("Count: ",count)
+        print(username + ": " + message)
         if(message.lower().find("enter:") != -1):
             send = message.lower().split("enter:")[1].strip()
             send_message(username+" has entered "+send)
