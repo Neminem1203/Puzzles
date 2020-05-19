@@ -1,4 +1,5 @@
 import socket
+from datetime import datetime
 f = open("twitchcredentials.txt", "r") # put your username in the first line and oauth in the second line
 HOST = "irc.twitch.tv"
 PORT = 6667
@@ -25,16 +26,20 @@ while True:
 
 disconnect = False
 antispam = 0
-entered = []
+entered = {}
+
 while not disconnect:
     for line in str(s.recv(1024)).split('\\r\\n'):
+        if(line == "'"):
+            continue
+        print(datetime.now(),end=" : ")
         print(line)
         parts = line.split(':')
-        print(parts)
         if(line == "b''"): # not sure why but sometimes my terminal gets spammed
             antispam += 1
             if antispam > 10:
                 disconnect = True
+            break
         if("PING" in parts[0]): # Response to Ping from Twitch
             print("Sending Pong Message")
             s.send(bytes("PONG :tmi.twitch.tv", "UTF-8"))
@@ -46,15 +51,19 @@ while not disconnect:
         usernamesplit = parts[1].split("!")
         username = usernamesplit[0]
 
-        print(username + ": " + message)
+        # print(username + ": " + message)
         # Entry Bot
+        return_message = ""
         if(message.lower().find("enter:") != -1):
             send = message.lower().split("enter:")[1].strip()
-            entered += [send]
-            send_message(username+" has entered "+send)
+            if(username in entered.keys()):
+                return_message += username+"'s previous entry: "+entered[username]+". "
+            entered[username] = send
+            return_message += username+" has entered "+send+"."
         if(message.lower() == "!entered"):
-            if(len(entered) != 0):
-                send_message("Entries: "+", ".join(entered))
+            if(len(entered.values()) != 0):
+                return_message += "Entries: "+(", ".join(entered.values()))
             else:
-                send_message("No Entries Yet!")
-        
+                return_message += "No Entries Yet!"
+        send_message(return_message)
+        #
