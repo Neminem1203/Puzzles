@@ -27,6 +27,7 @@ while True:
 disconnect = False
 antispam = 0
 entered = {}
+auto_response = {}
 
 while not disconnect:
     for line in str(s.recv(1024)).split('\\r\\n'):
@@ -53,17 +54,34 @@ while not disconnect:
 
         # print(username + ": " + message)
         # Entry Bot
-        return_message = ""
-        if(message.lower().find("enter:") != -1):
-            send = message.lower().split("enter:")[1].strip()
-            if(username in entered.keys()):
-                return_message += username+"'s previous entry: "+entered[username]+". "
-            entered[username] = send
-            return_message += username+" has entered "+send+"."
-        if(message.lower() == "!entered"):
-            if(len(entered.values()) != 0):
-                return_message += "Entries: "+(", ".join(entered.values()))
+        # return_message = ""
+        # if(message.lower().find("enter:") != -1):
+        #     send = message.lower().split("enter:")[1].strip()
+        #     if(username in entered.keys()):
+        #         return_message += username+"'s previous entry: "+entered[username]+". "
+        #     entered[username] = send
+        #     return_message += username+" has entered "+send+"."
+        # if(message.lower() == "!entered"):
+        #     if(len(entered.values()) != 0):
+        #         return_message += "Entries: "+(", ".join(entered.values()))
+        #     else:
+        #         return_message += "No Entries Yet!"
+        # send_message(return_message)
+
+        # Make commands to responses
+        if(message.lower() in auto_response):
+            send_message(auto_response[message])
+        if(message.lower()[0:15] == "!auto_response:"):
+            new_resp = message.split(":")
+            if(len(new_resp) > 2):
+                auto_response[new_resp[1].lower().strip()] = ":".join(new_resp[2:])
+                print("Created new response to: ",new_resp[1])
             else:
-                return_message += "No Entries Yet!"
-        send_message(return_message)
-        #
+                send_message("!auto_response:<response_to>:<response>")
+        elif(message.lower()[0:17] == "!remove_response:"):
+            remove_resp = message.split(":")
+            del auto_response[remove_resp[1].strip().lower()]
+        elif(message.lower().strip() == "!all_responses"):
+            send_message(", ".join(auto_response.keys()))
+        elif(message.lower().strip() == "!clear_responses"):
+            auto_response = {}
