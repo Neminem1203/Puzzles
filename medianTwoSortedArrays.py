@@ -35,9 +35,10 @@ def findMedianSortedArrays(nums1, nums2):
         return firstNum
     else:
         if (p1 >= len(nums1)):
-            return (firstNum + nums2[p2 + (goal - i)])/2
+
+            return (firstNum + nums2[int(p2) + int(goal - i)])/2
         elif (p2 >= len(nums2)):
-            return (firstNum + nums1[p1 + (goal - i)])/2
+            return (firstNum + nums1[int(p1) + int(goal - i)])/2
         else:
             if (nums1[p1] < nums2[p2]):
                 return (firstNum + nums1[p1])/2
@@ -46,4 +47,6 @@ def findMedianSortedArrays(nums1, nums2):
 
 
 
+print(findMedianSortedArrays([1,3], [2]))
+print(findMedianSortedArrays([1,2], [3,4]))
 print(findMedianSortedArrays([1,2,3,4], [3,4,5,6]))
