@@ -7,7 +7,6 @@ def intToRoman(num):
     """
     dict = {"":0,"I":1, "V":5, "X":10, "L":50, "C":100, "D":500, "M":1000}
     total = num
-    sum = 0
     roman = ""
     while(total > 0):
         if(total >= 1000):
