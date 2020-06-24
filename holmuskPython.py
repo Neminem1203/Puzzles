@@ -32,17 +32,16 @@ def longestConsecutiveElements(list):
     seen = {}
     for num in list:
         seen[num] = True
-    used = {}
     longest = 0
     for num in list:
         sequence = 1
-        used[num] = True
+        seen[num] = False
 
         # numbers backwards
         i = num-1
         while True:
-            if seen.get(i) == True and used.get(i) == None:
-                used[i] = True
+            if seen.get(i) == True:
+                seen[i] = False
                 sequence += 1
             else:
                 break
@@ -51,8 +50,8 @@ def longestConsecutiveElements(list):
 
         # numbers forward
         while True:
-            if seen.get(i) == True and used.get(i) == None:
-                used[i] = True
+            if seen.get(i) == True:
+                seen[i] = False
                 sequence += 1
             else:
                 break
