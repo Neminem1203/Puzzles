@@ -27,3 +27,4 @@ def multiplicationTableLookup(n, x):
         if x % i == 0 and x / i <= n:
             count += 1
     return count
+
