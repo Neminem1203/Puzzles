@@ -6,12 +6,13 @@ def combinationSum(candidates, target):
     :type target: int
     :rtype: List[List[int]]
     """
-
+    sorted_candidates = candidates
+    sorted_candidates.sort()
     candidate_search = {0: []}
     ind = 0
-    while ind < len(candidates):
+    while ind < len(sorted_candidates):
 
-        candidate = candidates[ind] # candidate we are looking at
+        candidate = sorted_candidates[ind] # candidate we are looking at
         for search_ind in list(candidate_search): # need to turn into list so compiler doesnt complain about changing dict size
             multiple = 1 # multiple to check against the already established candidate_search
             limit = search_ind - (multiple * candidate)
@@ -31,9 +32,16 @@ def combinationSum(candidates, target):
             candidate_search[target-new_candidate] += [[candidate]*multiple] # adds multiple copies of candidate as long as its under target
             multiple += 1 # increment multiple
         ind += 1 # next candidate
-    # print(candidate_search) # debugging
-    return candidate_search[0] # return all candidate_searches that hit the target of 0
+
+    # remove duplicates
+    return_list = []
+    for lst in candidate_search[0]:
+        if lst not in return_list:
+            return_list += [lst]
+    return return_list # return all candidate_searches that hit the target
 
 
-print(combinationSum([2,3,6,7], 7)) # [[2,2,3], [7]]
-print(combinationSum([2,3,5], 8)) # [[2,2,2,2],[2,3,3],[3,5]]
+# print(combinationSum([2,3,6,7], 7)) # [[2,2,3], [7]]
+# print(combinationSum([2,3,5], 8)) # [[2,2,2,2],[2,3,3],[3,5]]
+
+print(combinationSum([2,5,8,4], 10))
