@@ -10,4 +10,4 @@ def minFlips(target):
         if state != i:
             count += 1
             state = i
-    return count
+    return count 
