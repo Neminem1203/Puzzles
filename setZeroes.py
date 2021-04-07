@@ -25,6 +25,32 @@ def setZeroes(matrix):
 
     return matrix
 
+
+def setZeroes(matrix): # second try
+    """
+    :type matrix: List[List[int]]
+    :rtype: None Do not return anything, modify matrix in-place instead.
+    """
+    m = len(matrix)
+    n = len(matrix[0])
+    clear_rows = [False for _ in range(m)]
+    clear_cols = [False for _ in range(n)]
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] == 0:
+                clear_rows[i] = True
+                clear_cols[j] = True
+
+    for i in range(m):
+        if clear_rows[i] == True:
+            for ind in range(n):
+                matrix[i][ind] = 0
+
+    for j in range(n):
+        if clear_cols[j] == True:
+            for ind in range(m):
+                matrix[ind][j] = 0
+
 firstMat = [
   [1,1,1],
   [1,0,1],
