@@ -35,7 +35,9 @@ def minInteger(num, k):
     print(ca.arr)
     for val, ind in ca.arr:
         new_ind = ind + ranges[ind]
-        print("PTR:",new_start,"\t\tVal:",val,"\t\tNew Ind:",new_ind,"\t\tRemaining:",remaining,"\n\n", ranges,"\n")
+        print("PTR:",new_start,"\t\tVal:",val,"\t\tNew Ind:",new_ind,"\t\tRemaining:",remaining,"\n\n", num_arr,"\n")
+        if val == 9:
+            break
         if new_ind == new_start:
             ind_used[ind] = True
             num_arr.append(str(val))
@@ -53,6 +55,17 @@ def minInteger(num, k):
     for i in range(len(num)):
         if i not in ind_used:
             num_arr.append(num[i])
+    ind = 0
+    print(num_arr)
+    while remaining > 0 and ind < len(num_arr)-1:
+        if num_arr[ind] > num_arr[ind+1]:
+            temp = num_arr[ind]
+            num_arr[ind] = num_arr[ind+1]
+            num_arr[ind+1] = temp
+            remaining -= 1
+            ind -= 1
+        ind += 1
+
     return "".join(num_arr)
 
 # print(minInteger("4321", 4))
@@ -61,7 +74,8 @@ def minInteger(num, k):
 # print(minInteger("22", 22))
 # print(minInteger("9438957234785635408", 23))
 # print(minInteger("9000900",3))
-print(minInteger("294984148179", 11))
+# print(minInteger("294984148179", 11))
+print(minInteger("55456497803213206850845", 10)) # "05455649783213206850845"
 '''
 9438957234785635408 23
 0943895723478563548 6
