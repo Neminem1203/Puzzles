@@ -1,8 +1,9 @@
-def iteration_generator(coin_list, main_list):
+def iteration_generator(coin_list, main_list, target):
     new_list = []
     for coin in coin_list:
         for values in main_list:
-            new_list.append(values+coin)
+            if values+coin <= target:
+                new_list.append(values+coin)
     return new_list
 
 def counter(main_list):
@@ -32,7 +33,7 @@ def target_finder(coins, target):
             coin_list.append(curr_val)
             curr_val += coin_value
 
-        main_list = iteration_generator(coin_list, main_list)
+        main_list = iteration_generator(coin_list, main_list, target)
     # how many diff iterations you can make that amount of money in cents
     coin_count_list = counter(main_list)
     return(coin_count_list[target]) # how to make change for target
@@ -54,7 +55,7 @@ def change_maker(coins, target):
         for i in range(1, coin_count+1):
             coin_list.append(coin_value * i)
 
-        main_list = iteration_generator(coin_list, main_list)
+        main_list = iteration_generator(coin_list, main_list, target)
     # how many diff iterations you can make that amount of money in cents
     coin_count_list = counter(main_list)
     return(coin_count_list[target]) # how to make change for target
