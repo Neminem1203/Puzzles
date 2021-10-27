@@ -1,4 +1,7 @@
 import math
+'''
+Inspiration: https://www.youtube.com/watch?v=VLbePGBOVeg
+'''
 def iteration_generator(coin_list, main_list, target):
     if not target:
         target = math.inf
