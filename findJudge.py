@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/find-the-town-judge
 def findJudge(n, trust):
     trusted_by = {}
     trust_someone = [False for _ in range(n)]
