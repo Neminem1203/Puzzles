@@ -1,4 +1,7 @@
+import math
 def iteration_generator(coin_list, main_list, target):
+    if not target:
+        target = math.inf
     new_list = []
     for coin in coin_list:
         for values in main_list:
@@ -38,12 +41,13 @@ def target_finder(coins, target):
     coin_count_list = counter(main_list)
     return(coin_count_list[target]) # how to make change for target
 
-def change_maker(coins, target):
+def change_maker(coins, target=None):
     '''
     Makes target value with the coins given
     :param coins: Array of [coin_value, coin_count]
-    :param target: target you're trying to get to
-    :return: number of iterations for target value
+    :param target: (optional) target you're trying to get to
+    :return: array of possibilities on how to generate the index-value or
+        number of iterations for target value (if target is specified)
     '''
     main_list = [0] # initial list
     for coin_value, coin_count in coins:
@@ -55,10 +59,13 @@ def change_maker(coins, target):
         for i in range(1, coin_count+1):
             coin_list.append(coin_value * i)
 
-        main_list = iteration_generator(coin_list, main_list, target)
+        main_list = iteration_generator(coin_list, main_list,target)
     # how many diff iterations you can make that amount of money in cents
     coin_count_list = counter(main_list)
-    return(coin_count_list[target]) # how to make change for target
+    if target: # if target is specified, return the number of times target occurs
+        return coin_count_list[target]
+    return(counter(main_list)) # how to make change for target
 
 print(change_maker([[1,3],[3,2]], 6)) # 1 1 1 3 3 making 6
+print(change_maker([[1,3],[3,2]])) # 1 1 1 3 3 array
 print(target_finder([1,5,10,25,50,100], 100)) # all coins making change for $1
