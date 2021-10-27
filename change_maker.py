@@ -6,7 +6,7 @@ for coin_value in coins:
     coin_list = [0] # you can always make $0
     # add up to the target value
     curr_val = coin_value
-    while sum <= target:
+    while curr_val <= target:
         coin_list.append(curr_val)
         curr_val += coin_value
     # the new list we will replace main with
